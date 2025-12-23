@@ -21,11 +21,13 @@ sudo apt-get install -y git >/dev/null
 echo "Cloning codekub..."
 rm -rf ~/.local/share/omakub
 git clone https://github.com/CodeCompasss/codekub.git ~/.local/share/omakub >/dev/null
-if [[ $OMAKUB_REF != "master" ]]; then
+if [[ -n "$OMAKUB_REF" ]]; then
 	cd ~/.local/share/omakub
-	git fetch origin "${OMAKUB_REF:-stable}" && git checkout "${OMAKUB_REF:-stable}"
+	git fetch origin "$OMAKUB_REF"
+	git checkout "$OMAKUB_REF"
 	cd -
 fi
+
 
 echo "Installation starting..."
 source ~/.local/share/omakub/install.sh
