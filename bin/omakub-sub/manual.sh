@@ -1,4 +1,4 @@
 #!/bin/bash
 
-xdg-open "https://manual.omakub.org" &>/dev/null
+xdg-open "https://codecompasss.github.io/code_campus_userguide/" &>/dev/null
 source $OMAKUB_PATH/bin/omakub-sub/menu.sh
