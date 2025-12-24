@@ -1,25 +1,70 @@
 #!/bin/bash
+set -e
 
-# Install default databases
-if [[ -v OMAKUB_FIRST_RUN_DBS ]]; then
-	dbs=$OMAKUB_FIRST_RUN_DBS
-else
-	AVAILABLE_DBS=("MySQL" "Redis" "PostgreSQL")
-	dbs=$(gum choose "${AVAILABLE_DBS[@]}" --no-limit --height 5 --header "Select databases (runs in Docker)")
-fi
+MYSQL_ROOT_PASSWORD="root"
 
-if [[ -n "$dbs" ]]; then
-	for db in $dbs; do
-		case $db in
-		MySQL)
-			sudo docker run -d --restart unless-stopped -p "127.0.0.1:3306:3306" --name=mysql8 -e MYSQL_ROOT_PASSWORD= -e MYSQL_ALLOW_EMPTY_PASSWORD=true mysql:8.4
-			;;
-		Redis)
-			sudo docker run -d --restart unless-stopped -p "127.0.0.1:6379:6379" --name=redis redis:7
-			;;
-		PostgreSQL)
-			sudo docker run -d --restart unless-stopped -p "127.0.0.1:5432:5432" --name=postgres16 -e POSTGRES_HOST_AUTH_METHOD=trust postgres:16
-			;;
-		esac
-	done
-fi
+echo "🐬 Installing system MySQL Server..."
+
+# -----------------------------
+# Install MySQL Server
+# -----------------------------
+sudo apt update -y
+sudo DEBIAN_FRONTEND=noninteractive apt install -y mysql-server
+
+# -----------------------------
+# Start & enable MySQL
+# -----------------------------
+sudo systemctl enable mysql
+sudo systemctl start mysql
+
+# -----------------------------
+# Configure root user
+# - Enable password login
+# - Fix auth plugin
+# - Allow TCP + socket
+# -----------------------------
+echo "🔐 Configuring MySQL root user..."
+
+sudo mysql <<EOF
+ALTER USER 'root'@'localhost'
+  IDENTIFIED WITH mysql_native_password
+  BY '${MYSQL_ROOT_PASSWORD}';
+
+FLUSH PRIVILEGES;
+EOF
+
+# -----------------------------
+# Ensure TCP access (localhost)
+# -----------------------------
+MYSQL_CONFIG="/etc/mysql/mysql.conf.d/mysqld.cnf"
+
+sudo sed -i 's/^bind-address.*/bind-address = 127.0.0.1/' $MYSQL_CONFIG
+sudo sed -i 's/^#\?port.*/port = 3306/' $MYSQL_CONFIG
+
+# -----------------------------
+# Restart MySQL
+# -----------------------------
+sudo systemctl restart mysql
+
+# -----------------------------
+# Install MySQL client
+# -----------------------------
+sudo apt install -y mysql-client
+
+# -----------------------------
+# Test connection
+# -----------------------------
+echo "🔍 Testing MySQL login..."
+mysql -u root -p${MYSQL_ROOT_PASSWORD} -e "SELECT VERSION();"
+
+echo ""
+echo "✅ MySQL system installation complete!"
+echo ""
+echo "🔐 Credentials:"
+echo "  User: root"
+echo "  Pass: root"
+echo "  Host: localhost / 127.0.0.1"
+echo "  Port: 3306"
+echo ""
+echo "➡️ Login using:"
+echo "  mysql -u root -p"
