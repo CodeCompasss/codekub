@@ -3,7 +3,7 @@ cat <<EOF >~/.local/share/applications/Exercism.desktop
 Name=Exercism
 Comment=Practice programming exercises with mentorship
 Exec=xdg-open https://exercism.org/
-Icon=exercism
+Icon=/home/$USER/.local/share/omakub/applications/icons/exercism
 Terminal=false
 Type=Application
 Categories=Education;

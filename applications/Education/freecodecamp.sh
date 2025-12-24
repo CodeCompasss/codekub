@@ -3,7 +3,7 @@ cat <<EOF >~/.local/share/applications/freeCodeCamp.desktop
 Name=freeCodeCamp
 Comment=Interactive coding lessons and projects
 Exec=xdg-open https://www.freecodecamp.org/
-Icon=freecodecamp
+Icon=/home/$USER/.local/share/omakub/applications/icons/freecodecamp
 Terminal=false
 Type=Application
 Categories=Education;

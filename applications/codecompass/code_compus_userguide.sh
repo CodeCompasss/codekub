@@ -1,7 +1,7 @@
 cat <<EOF >~/.local/share/applications/UserGuide.desktop
 [Desktop Entry]
 Name=User Guide
-Icon=codecompass
+Icon=/home/$USER/.local/share/omakub/applications/icons/codecompass.png
 Comment=Open the CodeCompass user guide
 Exec=xdg-open https://codecompasss.github.io/code_campus_userguide/
 Terminal=false
