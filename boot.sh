@@ -20,13 +20,19 @@ sudo apt-get install -y git >/dev/null
 
 echo "Cloning codekub..."
 rm -rf ~/.local/share/omakub
-git clone https://github.com/CodeCompasss/codekub.git ~/.local/share/omakub >/dev/null
+git clone --branch dev --single-branch https://github.com/CodeCompasss/codekub.git ~/.local/share/omakub >/dev/null
+
+cd ~/.local/share/omakub
+current_branch=$(git rev-parse --abbrev-ref HEAD)
+echo "✅ Cloned branch: $current_branch"
+
 if [[ -n "$OMAKUB_REF" ]]; then
-	cd ~/.local/share/omakub
-	git fetch origin "$OMAKUB_REF"
-	git checkout "$OMAKUB_REF"
-	cd -
+    git fetch origin "$OMAKUB_REF"
+    git checkout "$OMAKUB_REF"
+    current_branch=$(git rev-parse --abbrev-ref HEAD)
+    echo "✅ Switched to branch: $current_branch"
 fi
+cd -
 
 
 echo "Installation starting..."

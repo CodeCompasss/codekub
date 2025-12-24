@@ -21,7 +21,6 @@ fi
 gnome-extensions disable tiling-assistant@ubuntu.com || true
 gnome-extensions disable ubuntu-appindicators@ubuntu.com || true
 gnome-extensions disable ubuntu-dock@ubuntu.com || true
-gnome-extensions enable ding@rastersoft.com
 
 # ------------------------------------
 # Install required extensions
@@ -72,11 +71,12 @@ gsettings set org.gnome.shell.extensions.dash-to-panel show-apps-icon true || tr
 # ------------------------------------
 # Configure TopHat (clean panel)
 # ------------------------------------
-gsettings set org.gnome.shell.extensions.tophat show-icons false || true
-gsettings set org.gnome.shell.extensions.tophat show-cpu false || true
-gsettings set org.gnome.shell.extensions.tophat show-disk false || true
-gsettings set org.gnome.shell.extensions.tophat show-mem false || true
-gsettings set org.gnome.shell.extensions.tophat show-fs false || true
+gsettings set org.gnome.shell.extensions.tophat show-icons true || true
+gsettings set org.gnome.shell.extensions.tophat show-cpu true || true
+gsettings set org.gnome.shell.extensions.tophat show-disk true || true
+gsettings set org.gnome.shell.extensions.tophat show-mem true || true
+gsettings set org.gnome.shell.extensions.tophat show-fs true || true
+
 # gsettings set org.gnome.shell.extensions.tophat network-usage-unit 'bits' || true
 
 # ------------------------------------
