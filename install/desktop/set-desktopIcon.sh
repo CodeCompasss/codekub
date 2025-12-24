@@ -9,6 +9,11 @@ apps=(
   "Docker.desktop"
   "Omakub.desktop"
   "org.gnome.Nautilus.desktop"
+  "UserGuide.desktop"
+  "CodeCompass.desktop"
+  "CSEStarterGuide.desktop"
+  "DevSetup.desktop"
+  "Repeto.desktop"
 )
 
 # Where .desktop files live
