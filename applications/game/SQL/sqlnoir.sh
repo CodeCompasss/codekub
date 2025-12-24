@@ -3,7 +3,7 @@ cat <<EOF >~/.local/share/applications/SQLNoir.desktop
 Name=SQL Noir
 Comment=Learn SQL by solving detective cases
 Exec=xdg-open https://www.sqlnoir.com/
-Icon=sqlnori
+Icon=/home/$USER/.local/share/omakub/applications/icons/sqlnori.png
 Terminal=false
 Type=Application
 Categories=Game;SQL;

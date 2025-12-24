@@ -3,7 +3,7 @@ cat <<EOF >~/.local/share/applications/MissingSemester.desktop
 Name=The Missing Semester (MIT)
 Comment=MIT course on tools and skills for computer science
 Exec=xdg-open https://missing.csail.mit.edu/
-Icon=/home/$USER/.local/share/omakub/applications/icons/missingsemester
+Icon=/home/$USER/.local/share/omakub/applications/icons/missingsemester.png
 Terminal=false
 Type=Application
 Categories=Education;

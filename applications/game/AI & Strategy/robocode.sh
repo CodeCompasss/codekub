@@ -4,7 +4,7 @@ Name=Robocode
 Exec=xdg-open https://robocode.sourceforge.io/
 Comment=
 Terminal=false
-Icon=robocode
+Icon=/home/$USER/.local/share/omakub/applications/icons/robocode.png
 Type=Application
 Categories=Game;AI;
 EOF

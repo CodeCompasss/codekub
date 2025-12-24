@@ -4,7 +4,7 @@ Name=Screeps
 Exec=xdg-open https://screeps.com/a/#!/sim
 Comment=
 Terminal=false
-Icon=screeps
+Icon=/home/$USER/.local/share/omakub/applications/icons/screeps.png
 Type=Application
 Categories=Game;AI;
 EOF

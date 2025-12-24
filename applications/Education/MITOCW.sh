@@ -3,7 +3,7 @@ cat <<EOF >~/.local/share/applications/MITOCW.desktop
 Name=MIT OpenCourseWare
 Comment=Free MIT courses and learning resources
 Exec=xdg-open https://ocw.mit.edu/
-Icon=/home/$USER/.local/share/omakub/applications/icons/mitocw
+Icon=/home/$USER/.local/share/omakub/applications/icons/mitocw.png
 Terminal=false
 Type=Application
 Categories=Education;

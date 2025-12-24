@@ -3,7 +3,7 @@ cat <<EOF >~/.local/share/applications/OdinProject.desktop
 Name=The Odin Project
 Comment=Full-stack web development curriculum
 Exec=xdg-open https://www.theodinproject.com/
-Icon=/home/$USER/.local/share/omakub/applications/icons/odin
+Icon=/home/$USER/.local/share/omakub/applications/icons/odin.jpg
 Terminal=false
 Type=Application
 Categories=Education;

@@ -3,7 +3,7 @@ cat <<EOF >~/.local/share/applications/CodeCompass.desktop
 Name=CodeCompass
 Exec=xdg-open https://codecompass.example.com
 Comment=
-Icon=/home/$USER/.local/share/omakub/applications/icons/codecompass.png
+Icon=/home/$USER/.local/share/omakub/applications/icons/codecompass .png
 Terminal=false
 Type=Application
 Categories=X-CodeCompass;
