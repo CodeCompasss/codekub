@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-echo "▶ Starting Zsh + Oh My Zsh + Powerlevel10k setup (Omakub style)"
+echo "▶ Starting Zsh + Oh My Zsh + Powerlevel10k + Antigen setup (Omakub style)"
 
 # -------------------------
 # Paths
@@ -9,6 +9,7 @@ echo "▶ Starting Zsh + Oh My Zsh + Powerlevel10k setup (Omakub style)"
 OMAKUB_CONFIGS="$HOME/.local/share/omakub/configs"
 ZSH_DIR="$HOME/.oh-my-zsh"
 ZSH_CUSTOM="$ZSH_DIR/custom"
+ANTIGEN="$HOME/.local/bin/antigen.zsh"
 
 # -------------------------
 # Function to show errors
@@ -24,8 +25,6 @@ trap 'error_trap $LINENO $?' ERR
 echo "▶ Checking for Zsh..."
 if ! command -v zsh >/dev/null 2>&1; then
     echo "⚠ Zsh not found. Installing..."
-
-    # Linux
     if [[ "$(uname)" == "Linux" ]]; then
         if command -v apt >/dev/null 2>&1; then
             sudo apt update && sudo apt install -y zsh git curl
@@ -37,8 +36,6 @@ if ! command -v zsh >/dev/null 2>&1; then
             echo "✗ Unsupported Linux package manager. Install Zsh manually."
             exit 1
         fi
-
-    # macOS
     elif [[ "$(uname)" == "Darwin" ]]; then
         if command -v brew >/dev/null 2>&1; then
             brew install zsh git curl
@@ -46,7 +43,6 @@ if ! command -v zsh >/dev/null 2>&1; then
             echo "✗ Homebrew not found. Install it first."
             exit 1
         fi
-
     else
         echo "✗ Unsupported OS. Install Zsh manually."
         exit 1
@@ -78,16 +74,16 @@ else
 fi
 
 # -------------------------
-# Install plugins
+# Install Antigen
 # -------------------------
-plugins=( zsh-autosuggestions zsh-syntax-highlighting )
-for plugin in "${plugins[@]}"; do
-    if [ ! -d "$ZSH_CUSTOM/plugins/$plugin" ]; then
-        git clone --depth=1 "https://github.com/zsh-users/$plugin.git" "$ZSH_CUSTOM/plugins/$plugin"
-    else
-        echo "✓ Plugin $plugin already installed"
-    fi
-done
+if [ ! -f "$ANTIGEN" ]; then
+    echo "▶ Installing Antigen..."
+    mkdir -p "$(dirname "$ANTIGEN")"
+    curl -L git.io/antigen > "$ANTIGEN"
+    chmod +x "$ANTIGEN"
+else
+    echo "✓ Antigen already installed"
+fi
 
 # -------------------------
 # Backup old configs
@@ -103,8 +99,29 @@ echo "▶ Applying Omakub Zsh configs..."
 cp "$OMAKUB_CONFIGS/zsh/zshrc" "$HOME/.zshrc"
 cp "$OMAKUB_CONFIGS/zsh/p10k.zsh" "$HOME/.p10k.zsh"
 [ -f "$OMAKUB_CONFIGS/zsh/zshenv" ] && cp "$OMAKUB_CONFIGS/zsh/zshenv" "$HOME/.zshenv"
-
 chmod 644 "$HOME/.zshrc" "$HOME/.p10k.zsh"
+
+# -------------------------
+# Add Antigen plugin loading to .zshrc if not already present
+# -------------------------
+if ! grep -q "antigen.zsh" "$HOME/.zshrc"; then
+    cat << 'EOF' >> "$HOME/.zshrc"
+
+# -------------------------
+# Antigen plugin manager
+# -------------------------
+source $HOME/.local/bin/antigen.zsh
+antigen init
+antigen use oh-my-zsh
+
+# Plugins
+antigen bundle zsh-users/zsh-autosuggestions
+antigen bundle zsh-users/zsh-syntax-highlighting
+antigen bundle romkatv/powerlevel10k
+antigen bundle lukechilds/zsh-nvm
+antigen apply
+EOF
+fi
 
 # -------------------------
 # Prevent Powerlevel10k wizard
@@ -127,8 +144,8 @@ fi
 # -------------------------
 # Done
 # -------------------------
-echo "✅ Zsh + Oh My Zsh + Powerlevel10k setup complete"
+echo "✅ Zsh + Oh My Zsh + Powerlevel10k + Antigen setup complete"
 echo "➡ Restart terminal or run: exec zsh"
 
-# Logout to pickup changes
+# Optional reboot
 gum confirm "Ready to reboot for all settings to take effect?" && sudo reboot || true
