@@ -59,3 +59,5 @@ Once the scripts finish installing, the system is customized:
   * Font size and font family.
   * Header and other UI tweaks.
 we are makse sl bootls.sh file use main odefault so we need to chagne for deve otehre wise you dev scipt chagne nwont apper remove the .config / omukub  maywork
+
+moved signal to optional 
