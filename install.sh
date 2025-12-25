@@ -29,6 +29,9 @@ if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
   # Install desktop tools and tweaks
   source ~/.local/share/omakub/install/desktop.sh
 
+  source ~/.local/share/omakub/install/zsh.sh
+
+
   # Revert to normal idle and lock settings
   gsettings set org.gnome.desktop.screensaver lock-enabled true
   gsettings set org.gnome.desktop.session idle-delay 300
