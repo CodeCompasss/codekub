@@ -129,3 +129,6 @@ fi
 # -------------------------
 echo "✅ Zsh + Oh My Zsh + Powerlevel10k setup complete"
 echo "➡ Restart terminal or run: exec zsh"
+
+# Logout to pickup changes
+gum confirm "Ready to reboot for all settings to take effect?" && sudo reboot || true
