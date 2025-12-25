@@ -1,1 +1,2 @@
-sudo snap install postman --classic    
+sudo snap install ghostty --classic
+

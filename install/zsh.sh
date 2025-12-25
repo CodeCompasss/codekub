@@ -23,8 +23,35 @@ trap 'error_trap $LINENO $?' ERR
 # -------------------------
 echo "▶ Checking for Zsh..."
 if ! command -v zsh >/dev/null 2>&1; then
-    echo "⚠ Zsh not installed. Install it first before running this script."
-    exit 1
+    echo "⚠ Zsh not found. Installing..."
+
+    # Linux
+    if [[ "$(uname)" == "Linux" ]]; then
+        if command -v apt >/dev/null 2>&1; then
+            sudo apt update && sudo apt install -y zsh git curl
+        elif command -v dnf >/dev/null 2>&1; then
+            sudo dnf install -y zsh git curl
+        elif command -v pacman >/dev/null 2>&1; then
+            sudo pacman -Sy --noconfirm zsh git curl
+        else
+            echo "✗ Unsupported Linux package manager. Install Zsh manually."
+            exit 1
+        fi
+
+    # macOS
+    elif [[ "$(uname)" == "Darwin" ]]; then
+        if command -v brew >/dev/null 2>&1; then
+            brew install zsh git curl
+        else
+            echo "✗ Homebrew not found. Install it first."
+            exit 1
+        fi
+
+    else
+        echo "✗ Unsupported OS. Install Zsh manually."
+        exit 1
+    fi
+    echo "✓ Zsh installed successfully"
 else
     echo "✓ Zsh already installed"
 fi

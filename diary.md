@@ -61,3 +61,8 @@ Once the scripts finish installing, the system is customized:
 we are makse sl bootls.sh file use main odefault so we need to chagne for deve otehre wise you dev scipt chagne nwont apper remove the .config / omukub  maywork
 
 moved signal to optional 
+
+ snap install ghostty --classic
+
+if sudo is misse dhte nsta fail 
+sudo snap install ghostty --classic
