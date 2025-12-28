@@ -7,7 +7,7 @@
 ![Demo GIF](video/output.gif)
 
 ```bash
-curl -sSL https://raw.githubusercontent.com/CodeCompasss/codekub/dev/boot.sh | bash
+curl -sSL https://raw.githubusercontent.com/CodeCompasss/codekub/main/boot.sh | bash
 ```
 
 **Codekub** is a fork of **Omakub**, reimagined specifically for **Computer Science beginners** and early-stage developers.
