@@ -114,33 +114,36 @@ grep -q POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD "$HOME/.zshrc" || \
 echo "export POWERLEVEL9K_DISABLE_CONFIGURATION_WIZARD=true" >> "$HOME/.zshrc"
 
 # -------------------------
-# Set Zsh as default shell
+# Detect Zsh path
 # -------------------------
-ZSH_PATH="$(which zsh)"
-CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7 || echo $SHELL)"
-if [ "$CURRENT_SHELL" != "$ZSH_PATH" ]; then
-    echo "▶ Changing default shell to Zsh..."
+ZSH_PATH="$(command -v zsh || true)"
+CURRENT_SHELL="$(getent passwd "$USER" | cut -d: -f7 || echo "$SHELL")"
+
+# -------------------------
+# Attempt to set Zsh as default shell (best-effort)
+# -------------------------
+if [[ -n "$ZSH_PATH" && "$CURRENT_SHELL" != "$ZSH_PATH" ]]; then
+  echo "▶ Attempting to set Zsh as default shell..."
+
+  if [[ -t 0 ]]; then
     if chsh -s "$ZSH_PATH"; then
-        echo "✓ Default shell changed to Zsh"
+      echo "✓ Default shell changed to Zsh"
     else
-        echo "⚠ Could not change shell automatically. Run manually: chsh -s $ZSH_PATH"
+      echo "⚠ Could not change shell automatically."
+      echo "👉 Run manually: chsh -s $ZSH_PATH"
     fi
+  else
+    echo "⚠ Non-interactive session detected."
+    echo "👉 Run manually: chsh -s $ZSH_PATH"
+  fi
 fi
 
 # -------------------------
-# Force new terminals to start Zsh
+# Final instructions (NO exec, NO forcing)
 # -------------------------
-PROFILE_FILES=("$HOME/.profile" "$HOME/.bash_profile" "$HOME/.bashrc")
-for profile in "${PROFILE_FILES[@]}"; do
-    [ -f "$profile" ] || touch "$profile"
-    grep -qxF "exec zsh" "$profile" || echo "exec zsh" >> "$profile"
-done
+echo
+echo "✅ Zsh setup complete!"
+echo "👉 To start using Zsh now, run: zsh"
+echo "👉 To make Zsh default on login, log out & back in"
+echo
 
-# -------------------------
-# Switch current session to Zsh
-# -------------------------
-echo "✅ Setup complete. Switching to Zsh now..."
-exec zsh
-
-# Optional reboot
-gum confirm "Ready to reboot for all settings to take effect?" && sudo reboot || true
