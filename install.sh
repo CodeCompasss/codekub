@@ -23,14 +23,15 @@ if [[ "$XDG_CURRENT_DESKTOP" == *"GNOME"* ]]; then
 
   echo "Installing terminal and desktop tools..."
 
-  # Install terminal tools
-  source ~/.local/share/omakub/install/terminal.sh
+  # # Install terminal tools
+  # source ~/.local/share/omakub/install/terminal.sh
 
-  # Install desktop tools and tweaks
-  source ~/.local/share/omakub/install/desktop.sh
+  # # Install desktop tools and tweaks
+  # source ~/.local/share/omakub/install/desktop.sh
 
-  echo "Trying to intsall zsh file "
-  source ~/.local/share/omakub/install/zsh.sh
+  # echo "Trying to intsall zsh file "
+  # source ~/.local/share/omakub/install/zsh.sh
+  source ~/.local/share/omakub/install/terminal/a-shell.sh
 
 
   # Revert to normal idle and lock settings
