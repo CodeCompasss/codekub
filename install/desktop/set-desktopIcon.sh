@@ -2,15 +2,9 @@
 
 # Apps you want on the Desktop
 apps=(
-  "Neovim.desktop"
-  "Activity.desktop"
-  "Omakub.desktop"
   "org.gnome.Nautilus.desktop"
   "UserGuide.desktop"
-  "CodeCompass.desktop"
   "CSEStarterGuide.desktop"
-  "RayyanCodingSchool.desktop"
-
 )
 
 # Where .desktop files live
