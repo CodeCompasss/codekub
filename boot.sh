@@ -10,6 +10,7 @@ ascii_art='   ______           __           __ __ __
               C O D E K U B
 '
 
+
 echo -e "$ascii_art"
 echo "=> codekub is for fresh Ubuntu 24.04+ installations only!"
 echo -e "\nBegin installation (or abort with ctrl+c)..."
@@ -17,15 +18,14 @@ echo -e "\nBegin installation (or abort with ctrl+c)..."
 sudo apt-get update >/dev/null
 sudo apt-get install -y git >/dev/null
 
-echo "Cloning codekub using default branch ..."
+echo "Cloning codekub in omakub-bin branch ..."
 rm -rf ~/.local/share/omakub
-git clone https://github.com/CodeCompasss/codekub.git ~/.local/share/omakub >/dev/null
+git clone --branch omakub-bin --single-branch https://github.com/CodeCompasss/codekub.git ~/.local/share/omakub >/dev/null
 
 cd ~/.local/share/omakub
 current_branch=$(git rev-parse --abbrev-ref HEAD)
 echo "✅ Cloned branch: $current_branch"
 
-# Optionally switch to a specific branch if OMAKUB_REF is set
 if [[ -n "$OMAKUB_REF" ]]; then
     git fetch origin "$OMAKUB_REF"
     git checkout "$OMAKUB_REF"
@@ -33,6 +33,7 @@ if [[ -n "$OMAKUB_REF" ]]; then
     echo "✅ Switched to branch: $current_branch"
 fi
 cd -
+
 
 echo "Installation starting..."
 source ~/.local/share/omakub/install.sh
